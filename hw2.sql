@@ -114,7 +114,7 @@ SELECT s.first_name, s.last_name, c.name AS course_name
 FROM students AS s
 JOIN student_courses AS sc ON s.id = sc.student_id
 JOIN courses AS c ON sc.course_id = c.id
-ORDER BY s.last_name, s.first_name, c.name limit 16;
+ORDER BY s.last_name, s.first_name, c.name LIMIT 16;
 
 -- Запрос для нахождения студентов с наивысшей средней оценкой в их группе
 -- Так как у нас есть числовые и буквенные оценки, будем работать только с 
@@ -156,7 +156,7 @@ HAVING AVG(grade) >= ALL (
     ) AS all_grades2 ON s2.id = all_grades2.student_id
     WHERE g2.id = g.id
     GROUP BY s2.id
-);
+) LIMIT 20;
 
 -- Подсчет количества студентов на каждом курсе
 -- Вывод:
@@ -169,7 +169,7 @@ HAVING AVG(grade) >= ALL (
 SELECT c.name AS course_name, COUNT(sc.student_id) AS student_count
 FROM courses AS c
 JOIN student_courses AS sc ON c.id = sc.course_id
-GROUP BY c.id;
+GROUP BY c.id LIMIT 50;
 
 -- Подсчет средней оценки на каждом курсе:
 -- course_name          |average_grade     |
@@ -184,7 +184,7 @@ SELECT 'Математический анализ', AVG(grade)
 FROM analysis
 UNION ALL
 SELECT 'Геометрия', AVG(grade)
-FROM geometry;
+FROM geometry LIMIT 20;
 
 DROP TABLE IF EXISTS student_courses CASCADE;
 DROP TABLE IF EXISTS group_courses CASCADE;
